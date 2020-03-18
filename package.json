@@ -28,8 +28,8 @@
     "build": "rimraf dist/ && babel ./ --out-dir  dist/ --ignore ./node_modules",
     "dev": "nodemon --exec yarn run babel-node ./bin/www",
     "serve": "node dist/app.js",
-    "test": "NODE_ENV=test mocha --require @babel/register --require babel-polyfill ./tests/**/*.js --timeout 10000 --exit",
-    "coverage": "nyc yarn test && nyc report --reporter=text-lcov | coveralls"
+    "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha --require @babel/register --require babel-polyfill ./tests/**/*.js --timeout 10000 --exit",
+    "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "devDependencies": {
     "chai": "^4.2.0",

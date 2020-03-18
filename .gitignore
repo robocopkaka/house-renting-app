@@ -1,7 +1,8 @@
 dist/
 node_modules/
 .idea/
-.env
 .yarn-error.log
 .coveralls.yml
 .nyc_output/
+.env
+coverage/

@@ -9,7 +9,7 @@ jobs:
       - image: circleci/postgres:12.2
         environment:
           POSTGRES_HOST: localhost
-          POSTGRES_PASSWORD: $DB_PASSWORD
+          POSTGRES_PASSWORD: ${DB_PASSWORD}
           POSTGRES_DB: house-renting-app-test
           NODE_ENV: test
     steps:
@@ -23,7 +23,7 @@ jobs:
           key: dependency-cache-{{ checksum "yarn.lock" }}
           paths:
             - ./node_modules
-      - run: sudo apt-get install postgresql postgresql-contrib postgresql-client-9.6
+      - run: sudo apt-get install postgresql postgresql-contrib postgresql-client
       - run: sudo service postgresql start
       - run:
           name: initialize database
@@ -34,4 +34,7 @@ jobs:
           command: yarn test
       - run:
           name: code-coverage
-          command: nyc report --reporter=text-lcov | coveralls
+          command: yarn run coverage
+      - store_artifacts:
+          path: coverage
+          prefix: coverage
