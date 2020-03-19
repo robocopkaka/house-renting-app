@@ -1,7 +1,5 @@
 # House renting app setup
 
-[![Coverage Status](https://coveralls.io/repos/github/robocopkaka/house-renting-app/badge.svg?branch=ft-setup-circle-and-coverage)](https://coveralls.io/github/robocopkaka/house-renting-app?branch=ft-setup-circle-and-coverage)
-
 ### Versions
 * Node - 10.19.0
 * NPM - 6.13.7
