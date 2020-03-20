@@ -5,6 +5,7 @@ import bodyParser from 'body-parser';
 import cookieParser from 'cookie-parser';
 import indexRouter from './routes/index';
 import testRouter  from './routes/test';
+import landlord from './routes/landlord';
 
 const app = express();
 
@@ -16,6 +17,7 @@ app.use(cookieParser());
 // routes
 app.use('/', indexRouter);
 app.use('/test', testRouter);
+app.use('/landlord', landlord);
 
 app.get('/', (req, res) => {
   res.status(200).send('app works')

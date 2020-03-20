@@ -1,5 +1,7 @@
 # House renting app setup
 
+[![Coverage Status](https://coveralls.io/repos/github/robocopkaka/house-renting-app/badge.svg?branch=ft-setup-circle-and-coverage)](https://coveralls.io/github/robocopkaka/house-renting-app?branch=ft-setup-circle-and-coverage)
+
 ### Versions
 * Node - 10.19.0
 * NPM - 6.13.7
@@ -16,7 +18,8 @@ and `house-renting-app-test`. For more information about this, you can check out
 * Clone this repository
 * Create a `.env` file in the root of the project and add the following 
 key-value pairs - `DB_USER` and `DB_PASSWORD` which should be the credentials
-for your database
+for your database.
+Create a secret key for authentication as shown in the `env.sample` file
 * Run `yarn` or `yarn install` to install all dependencies
 * Run `sequelize db:migrate` to run the current migration which adds
 a `User` table with an email field to your development database
