@@ -1,8 +1,13 @@
 dist/
 node_modules/
 .idea/
-.yarn-error.log
+yarn-error.log
 .coveralls.yml
 .nyc_output/
 .env
 coverage/
+build
+
+# MacOS cache
+.DS_Store
+

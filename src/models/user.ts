@@ -1,8 +1,9 @@
+// tslint:disable: variable-name
 import dotenv from 'dotenv';
 
+dotenv.config();
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
 
 const landlord = (sequelize, DataTypes) => {
   const Landlord = sequelize.define('Landlord', {

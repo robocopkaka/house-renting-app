@@ -14,7 +14,7 @@
 ## Setting up the project
 * Create these two databases with Postgres - `house-renting-app-development`
 and `house-renting-app-test`. For more information about this, you can check out
-`config/config.js`
+`src/config/config.js`
 * Clone this repository
 * Create a `.env` file in the root of the project and add the following 
 key-value pairs - `DB_USER` and `DB_PASSWORD` which should be the credentials
@@ -25,22 +25,21 @@ Create a secret key for authentication as shown in the `env.sample` file
 a `User` table with an email field to your development database
 
 ## Scripts
-* `yarn dev`/`yarn run dev` - starts the development server
-* `yarn test`/`yarn run test` - starts the development server
+* `yarn dev`/`yarn start:dev` - starts the development server
+* `yarn test`/`yarn run test` - to test app
 * `yarn build`/`yarn run build` - creates a production ready version of the application
-* `yarn serve`/`yarn run serve` - serves a production ready version of the application
+* `yarn serve`/`yarn start` - serves a production ready version of the application
 
 ## Directory structure
 
-* `/bin/www` - app entry point
 * `/config` - contains Sequelize configuration
 * `/controllers` - controllers related code. Helps move a lot of logic away from
 routes
-* `/migrations` - sequelize migrations are stored here
-* `/models` - model definitions are stored here
-* `/routes` - for defining routes
-* `/seeders` - you can define functions here to help you seed your database
-* `/tests` - for integration tests
+* `src/migrations` - sequelize migrations are stored here
+* `src/models` - model definitions are stored here
+* `src/routes` - for defining routes
+* `src/seeders` - you can define functions here to help you seed your database
+* `src/tests` - for integration tests
 * `.babelrc` - Babel config
-* `app.js` - general application settings
+* `src/app.js` - general application settings
 * `package.json` - details of installed packages and scripts

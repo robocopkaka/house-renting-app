@@ -1,6 +1,3 @@
-import dotenv from 'dotenv';
-import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
 import models from '../models/index';
 import sequelize from 'sequelize';
 
@@ -10,7 +7,7 @@ const landlord = models.Landlord;
 
 export default class Landlord {
 
-  async signUp (req, res) {
+  public async signUp (req, res) {
     try {
       const { email, password, name, phoneNumber } = req.body;
 
@@ -20,35 +17,35 @@ export default class Landlord {
             [Op.like]: email
           }
         }
-      })
+      });
       if ( userFound ) {
         return res.status(409).json({
           statusCode: 409,
-          error: 'Email has already been taken'
-        })
+          message: 'Email has already been taken'
+        });
       } else {
         const user = await landlord.create({
           email,
           password,
           name,
           phoneNumber
-        })
+        });
         const token = user.generateAuthToken();
         const result = res.status(201).json({
           statusCode: 201,
           user,
           token
-        })
+        });
         return result;
       }
     } catch (error) {
       return res.status(500).json({
-        statusCode: 500, error: 'Server error'
-      })
+        statusCode: 500, message: 'Server error'
+      });
     }
-  };
+  }
 
-  async login(req, res) {
+  public async login(req, res) {
     try {
       const { email, password } = req.body;
       const userFound = await landlord.findOne({
@@ -62,26 +59,26 @@ export default class Landlord {
         return res.status(401).json({
           statusCode: 401,
           message: 'Invalid Credentials'
-        })
+        });
       } else if(!userFound.validPassword(password)) {
         return res.status(401).json({
           statusCode: 401,
-          error: 'Invalid Credentials'
-        })
+          message: 'Invalid Credentials'
+        });
       }
       const token = userFound.generateAuthToken();
       return res.status(200).json({
-        user: 
+        user:
           userFound
         ,
         message: `Welcome back ${userFound.name}`,
         token
-      })
+      });
     } catch (error) {
       return res.status(500).json({
         statusCode: 500,
-        error: 'Server error'
-      })
+        message: 'Server error'
+      });
     }
   }
 }
