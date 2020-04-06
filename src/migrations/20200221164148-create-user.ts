@@ -1,4 +1,5 @@
 'use strict';
+// tslint:disable: variable-name
 module.exports = {
   up: (queryInterface, Sequelize) => {
     return queryInterface.createTable('Landlords', {

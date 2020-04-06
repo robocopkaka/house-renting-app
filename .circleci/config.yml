@@ -26,6 +26,9 @@ jobs:
       - run: sudo apt-get install postgresql postgresql-contrib postgresql-client
       - run: sudo service postgresql start
       - run:
+          name: Run build
+          command: yarn run build
+      - run:
           name: initialize database
           command: |
             NODE_ENV=test node_modules/.bin/sequelize db:migrate

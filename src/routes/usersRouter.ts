@@ -1,18 +1,19 @@
 import express from 'express';
-import Landlord from '../controllers/landlordController';
-import validation from '../middleware/validation';
+import Landlord from '../controllers/userController';
+import { signupUserValidation, loginUserValidation } from '../middleware/validation/userValidation';
 
 const router = express.Router();
 const landlord = new Landlord();
 
 router.post(
   '/signup',
-  validation.checkUserInput,
+  signupUserValidation,
   landlord.signUp
 );
 
 router.post(
   '/login',
+  loginUserValidation,
   landlord.login
 );
 
