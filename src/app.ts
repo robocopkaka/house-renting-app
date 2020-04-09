@@ -6,6 +6,8 @@ import dotenv from 'dotenv';
 
 import indexRouter from './routes/index';
 import landlord from './routes/usersRouter';
+import { createServer } from "http";
+import sequelize from "./index";
 
 dotenv.config();
 
@@ -42,8 +44,14 @@ app.get('/*', (req: any, res: any) => {
 
 const port = process.env.PORT || 8000;
 
-app.listen(port, () => {
-  logger.debug(`Server running on port ${chalk.blue(port)}`);
-});
+(async () => {
+  await sequelize.sync({ logging: false });
+
+  createServer(app)
+    .listen(
+      port,
+      () => logger.debug(`Server running on port ${chalk.blue(port)}`)
+    );
+})();
 
 export = app;

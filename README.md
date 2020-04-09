@@ -21,10 +21,15 @@ key-value pairs - `DB_USER` and `DB_PASSWORD` which should be the credentials
 for your database.
 Create a secret key for authentication as shown in the `env.sample` file
 * Run `yarn` or `yarn install` to install all dependencies
-* Run `sequelize db:migrate` to run the current migration which adds
+* Run `yarn build` to build the app
+* Run `npx sequelize-cli db:migrate`/ `sequelize db:migrate` to run the current migration which adds
 a `User` table with an email field to your development database
+* To start the app, run the following:
+  - `yarn watch` to watch for changes
+  - `yarn start:dev` in a different terminal to start the application
 
 ## Scripts
+* `yarn watch` - to watch for file changes. Should be run in a different terminal window
 * `yarn dev`/`yarn start:dev` - starts the development server
 * `yarn test`/`yarn run test` - to test app
 * `yarn build`/`yarn run build` - creates a production ready version of the application

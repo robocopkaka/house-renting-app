@@ -29,10 +29,6 @@ jobs:
           name: Run build
           command: yarn run build
       - run:
-          name: initialize database
-          command: |
-            NODE_ENV=test node_modules/.bin/sequelize db:migrate
-      - run:
           name: Run tests
           command: yarn test
       - run:
