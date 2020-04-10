@@ -1,9 +1,10 @@
-import models from '../models/index';
+// tslint:disable: variable-name
+
+import User from '../models/User';
 import sequelize from 'sequelize';
 
 const Op = sequelize.Op;
 
-const landlord = models.Landlord;
 
 export default class Landlord {
 
@@ -11,7 +12,7 @@ export default class Landlord {
     try {
       const { email, password, name, phoneNumber } = req.body;
 
-      const userFound = await landlord.findOne({
+      const userFound = await User.findOne({
         where : {
           email: {
             [Op.like]: email
@@ -24,19 +25,18 @@ export default class Landlord {
           message: 'Email has already been taken'
         });
       } else {
-        const user = await landlord.create({
+        const user = await User.create({
           email,
           password,
           name,
           phoneNumber
         });
         const token = user.generateAuthToken();
-        const result = res.status(201).json({
+        res.status(201).json({
           statusCode: 201,
           user,
           token
         });
-        return result;
       }
     } catch (error) {
       return res.status(500).json({
@@ -48,7 +48,7 @@ export default class Landlord {
   public async login(req, res) {
     try {
       const { email, password } = req.body;
-      const userFound = await landlord.findOne({
+      const userFound = await User.findOne({
         where: {
           email: {
             [Op.like]: email,

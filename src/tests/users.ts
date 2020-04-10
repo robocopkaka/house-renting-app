@@ -1,22 +1,21 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../app';
-
-import models from '../models';
+import Landlord from '../models/User';
 
 chai.should();
 const { expect } = chai;
 chai.use(chaiHttp);
 
-const landlord = models.Landlord;
+const landlord = Landlord;
 
 describe('tests users', () => {
     let landlordEmail;
     before(async () => {
-    })
+    });
 
     after(async() => {
-        landlord.destroy({ where: {}, force: true })
+        await landlord.destroy({ where: {}, force: true })
     });
 
     describe('/signup', () => {
@@ -32,8 +31,8 @@ describe('tests users', () => {
             .end((error, res) => {
                 res.should.have.status(201);
                 expect(res.body.user).to.be.an.instanceof(Object)
-                .that.includes.all.keys('id','email', 'name', 'phoneNumber', 'createdAt', 'updatedAt')
-                landlordEmail = res.body.user.email
+                .that.includes.all.keys('id','email', 'name', 'phoneNumber', 'createdAt', 'updatedAt');
+                landlordEmail = res.body.user.email;
                 done()
             })
         });
@@ -46,7 +45,7 @@ describe('tests users', () => {
                 password: 'testpassword',
                 name: 'tester',
                 phoneNumber: '0888888888'
-            })
+            });
             res.should.have.status(409);
             expect(res.body.message).to.be.eq('Email has already been taken')
         });
@@ -62,9 +61,9 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(400);
-                expect(res.body.message).to.be.eq('"name" is not allowed to be empty')
+                expect(res.body.message).to.be.eq('"name" is not allowed to be empty');
                 done()
-            })
+            });
         });
         it('landlord should see an error when name and email fields are not present', (done)=> {
             chai.request(app)
@@ -78,7 +77,7 @@ describe('tests users', () => {
             .end((error, res) => {
                 res.should.have.status(400);
                 done()
-            })
+            });
         });
         it('landlord should see an error when email is not valid', (done)=> {
             chai.request(app)
@@ -91,9 +90,9 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(400);
-                expect(res.body.message).to.be.eq('"email" must be a valid email')
-                done()
-            })
+                expect(res.body.message).to.be.eq('"email" must be a valid email');
+                done();
+            });
         });
         it('landlord should see an error when phone Number is not present', (done)=> {
             chai.request(app)
@@ -105,9 +104,9 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(400);
-                expect(res.body.message).to.be.eq('"phoneNumber" is required')
-                done()
-            })
+                expect(res.body.message).to.be.eq('"phoneNumber" is required');
+                done();
+            });
         });
         it('landlord should see an error when password is not present', (done)=> {
             chai.request(app)
@@ -120,14 +119,13 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(400);
-                expect(res.body.message).to.be.eq('"password" is not allowed to be empty')
+                expect(res.body.message).to.be.eq('"password" is not allowed to be empty');
                 done()
             })
         });
-    })
-    
+    });
     describe('/login', () => {
-    
+
         it('landlord should successfully login', (done) => {
             chai.request(app)
             .post('/landlord/login')
@@ -138,7 +136,7 @@ describe('tests users', () => {
             .end((error, res) => {
                 res.should.have.status(200);
                 expect(res.body.user).to.be.an.instanceof(Object)
-                .that.includes.all.keys('id','email', 'name', 'phoneNumber', 'createdAt', 'updatedAt')
+                .that.includes.all.keys('id','email', 'name', 'phoneNumber', 'createdAt', 'updatedAt');
                 done()
             })
         });
@@ -152,7 +150,7 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(401);
-                expect(res.body.message).to.be.eq('Invalid Credentials')
+                expect(res.body.message).to.be.eq('Invalid Credentials');
                 done()
             })
         });
@@ -165,9 +163,9 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 res.should.have.status(401);
-                expect(res.body.message).to.be.eq('Invalid Credentials')
+                expect(res.body.message).to.be.eq('Invalid Credentials');
                 done()
             })
         });
     })
-})
+});
