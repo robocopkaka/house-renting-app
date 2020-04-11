@@ -2,7 +2,7 @@ import {
   Table, Column, Model, DataType, Default, BelongsTo, ForeignKey, UpdatedAt, CreatedAt
 } from "sequelize-typescript";
 import { uuid } from 'uuidv4';
-import User from './User';
+import Landlord from './User';
 
 @Table
 export default class Property extends Model<Property> {
@@ -29,12 +29,12 @@ export default class Property extends Model<Property> {
   @Column
   public category!: string;
 
-  @ForeignKey(() => User)
+  @ForeignKey(() => Landlord)
   @Column
   public landlordId!: number;
 
-  @BelongsTo(() => User)
-  public landlord: User;
+  @BelongsTo(() => Landlord)
+  public landlord: Landlord;
 
   @CreatedAt
   @Column

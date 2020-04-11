@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import Property from './Property';
 
 @Table
-export default class User extends Model<User> {
+export default class Landlord extends Model<Landlord> {
   @Column
   public email!: string;
 
@@ -33,7 +33,7 @@ export default class User extends Model<User> {
   public properties: Property[];
 
   @BeforeCreate
-  static hashPassword(instance: User) {
+  static hashPassword(instance: Landlord) {
     const salt = bcrypt.genSaltSync();
     instance.password = bcrypt.hashSync(instance.password, salt);
   };
