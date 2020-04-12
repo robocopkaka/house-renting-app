@@ -1,6 +1,7 @@
 import {
-  Table, Column, Model, DataType, Default, BelongsTo, ForeignKey, UpdatedAt, CreatedAt
-} from 'sequelize-typescript';
+  Table, Column, Model, DataType, Default, BelongsTo, ForeignKey, UpdatedAt, CreatedAt,
+  BeforeCreate
+} from "sequelize-typescript";
 import { uuid } from 'uuidv4';
 import User from './User';
 
@@ -33,6 +34,9 @@ export default class Property extends Model<Property> {
   @Column
   public landlordId!: number;
 
+  @Column(DataType.BOOLEAN)
+  public available!: boolean;
+
   @BelongsTo(() => User)
   public landlord: User;
 
@@ -43,4 +47,18 @@ export default class Property extends Model<Property> {
   @UpdatedAt
   @Column
   public updatedAt!: Date;
+
+  public toJson = () => {
+    const values = Object.assign({}, this.get());
+
+    if (values['features'] === null) values['features'] = [];
+    delete values['createdAt'];
+    delete values['updatedAt'];
+    return values;
+  };
+
+  @BeforeCreate
+  static generateUid = (instance: Property) => {
+    instance.uid = uuid();
+  }
 }
