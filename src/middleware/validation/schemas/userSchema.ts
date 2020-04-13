@@ -20,3 +20,8 @@ export const loginUserSchema = Joi.object({
   email,
   password
 });
+
+export const updateUserSchema = Joi.object({
+  name: Joi.string().trim().min(3).max(150),
+  phoneNumber: Joi.number().integer()
+});
