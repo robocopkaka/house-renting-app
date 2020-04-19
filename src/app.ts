@@ -5,9 +5,9 @@ import { createLogger, format, transports } from 'winston';
 import dotenv from 'dotenv';
 
 import indexRouter from './routes/index';
-import landlord from './routes/usersRouter';
-import { createServer } from "http";
-import sequelize from "./index";
+import users from './routes/usersRouter';
+import { createServer } from 'http';
+import sequelize from './index';
 
 dotenv.config();
 
@@ -32,7 +32,7 @@ app.use(
 
 // routes
 app.use('/', indexRouter);
-app.use('/landlord', landlord);
+app.use('/users', users);
 
 app.get('/', (req: any, res: any) => {
   res.status(200).send('app works');
