@@ -1,26 +1,26 @@
 import express from 'express';
-import Landlord from '../controllers/userController';
+import User from '../controllers/userController';
 import { signupUserValidation, loginUserValidation, updateUserValidation } from '../middleware/validation/userValidation';
 
 const router = express.Router();
-const landlord = new Landlord();
+const user = new User();
 
 router.post(
   '/signup',
   signupUserValidation,
-  landlord.signUp
+  user.signUp
 );
 
 router.post(
   '/login',
   loginUserValidation,
-  landlord.login
+  user.login
 );
 
 router.patch(
   '/:id',
   updateUserValidation,
-  landlord.update
-)
+  user.update
+);
 
 export default router;

@@ -1,8 +1,8 @@
 import {
   Table, Column, Model, DataType, Default, BelongsTo, ForeignKey, UpdatedAt, CreatedAt
-} from "sequelize-typescript";
+} from 'sequelize-typescript';
 import { uuid } from 'uuidv4';
-import Landlord from './User';
+import User from './User';
 
 @Table
 export default class Property extends Model<Property> {
@@ -11,7 +11,7 @@ export default class Property extends Model<Property> {
 
   @Column
   public propertyType!: string;
-  @Default("apartment")
+  @Default('apartment')
 
   @Column
   public description?: string;
@@ -29,12 +29,12 @@ export default class Property extends Model<Property> {
   @Column
   public category!: string;
 
-  @ForeignKey(() => Landlord)
+  @ForeignKey(() => User)
   @Column
   public landlordId!: number;
 
-  @BelongsTo(() => Landlord)
-  public landlord: Landlord;
+  @BelongsTo(() => User)
+  public landlord: User;
 
   @CreatedAt
   @Column

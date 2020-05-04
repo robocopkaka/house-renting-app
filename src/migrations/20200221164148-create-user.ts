@@ -2,7 +2,7 @@
 // tslint:disable: variable-name
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable('Landlords', {
+    return queryInterface.createTable('Users', {
       id: {
         allowNull: false,
         autoIncrement: true,
@@ -10,16 +10,26 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       email: {
+        allowNull: false,
+        unique: true,
         type: Sequelize.STRING
       },
       password: {
+        allowNull: false,
         type: Sequelize.STRING
       },
       name: {
-        type: Sequelize.STRING,
+        allowNull: false,
+        type: Sequelize.STRING
       },
       phoneNumber: {
-        type: Sequelize.STRING,
+        allowNull: false,
+        type: Sequelize.STRING
+      },
+      role: {
+        allowNull: false,
+        type: Sequelize.ENUM,
+        values: ['landlord', 'tenant']
       },
       createdAt: {
         allowNull: false,
@@ -31,7 +41,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Landlords');
+  down: (queryInterface) => {
+    return queryInterface.dropTable('Users');
   }
 };

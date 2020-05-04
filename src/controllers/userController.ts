@@ -1,18 +1,18 @@
 // tslint:disable: variable-name
-
-import Landlord from '../models/User';
 import sequelize from 'sequelize';
+
+import UsersModel from '../models/User';
+import { Users } from '../helpers/interface';
 
 const Op = sequelize.Op;
 
-
-export default class LandlordController {
+export default class UserController {
 
   public async signUp (req, res) {
     try {
-      const { email, password, name, phoneNumber } = req.body;
+      const { email, password, name, phoneNumber, role } = req.body as Users;
 
-      const userFound = await Landlord.findOne({
+      const userFound = await UsersModel.findOne({
         where : {
           email: {
             [Op.like]: email
@@ -22,14 +22,15 @@ export default class LandlordController {
       if ( userFound ) {
         return res.status(409).json({
           statusCode: 409,
-          message: 'Email has already been taken'
+          message: 'Email already exist'
         });
       } else {
-        const user = await Landlord.create({
+        const user = await UsersModel.create({
           email,
           password,
           name,
-          phoneNumber
+          phoneNumber,
+          role
         });
         const token = user.generateAuthToken();
         res.status(201).json({
@@ -48,7 +49,7 @@ export default class LandlordController {
   public async login(req, res) {
     try {
       const { email, password } = req.body;
-      const userFound = await Landlord.findOne({
+      const userFound = await UsersModel.findOne({
         where: {
           email: {
             [Op.like]: email,
@@ -86,7 +87,7 @@ export default class LandlordController {
     try {
       const { id } = req.params;
       const { name, phoneNumber } = req.body;
-      const updateData : any = {};
+      const updateData: any = {};
       if (name) {
         updateData.name = name;
       }
@@ -97,13 +98,13 @@ export default class LandlordController {
       if (!name && !phoneNumber) {
         return res.status(400).json({
           message: 'Please provide a name, phoneNumber or both'
-        })
+        });
       }
 
       updateData.returning = true;
       updateData.plain = true;
 
-      const userFound = await Landlord.findByPk(parseInt(id, 10));
+      const userFound = await UsersModel.findByPk(parseInt(id, 10));
       if (!userFound) {
         return res.status(404).json({
           message: 'User not found.'
@@ -112,7 +113,7 @@ export default class LandlordController {
         const updatedUser = await userFound.update(updateData);
         return res.status(200).json({
           landlord: updatedUser.toJSON()
-        })
+        });
       }
     } catch (error) {
         return res.status(500).json({

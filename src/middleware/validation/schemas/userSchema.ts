@@ -9,12 +9,15 @@ const password = Joi.string().min(8).max(150).trim()
   .regex(/^[a-zA-Z0-9]{3,30}$/)
   .required();
 const phoneNumber = Joi.number().integer().required();
+const role = Joi.string().valid('landlord', 'tenant').required();
 
 export const signupUserSchema = Joi.object({
   name,
   email,
   password,
-  phoneNumber});
+  phoneNumber,
+  role
+});
 
 export const loginUserSchema = Joi.object({
   email,

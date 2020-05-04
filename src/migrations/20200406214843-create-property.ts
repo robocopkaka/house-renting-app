@@ -1,4 +1,5 @@
 'use strict';
+// tslint:disable: variable-name
 const { DataTypes } = require('sequelize');
 module.exports = {
   up: (queryInterface, Sequelize) => {
@@ -37,7 +38,7 @@ module.exports = {
       landlordId: {
         type: DataTypes.INTEGER,
         references: {
-          model: 'Landlords',
+          model: 'Users',
           key: 'id'
         }
       },
@@ -51,7 +52,7 @@ module.exports = {
       }
     });
   },
-  down: (queryInterface, Sequelize) => {
+  down: (queryInterface) => {
     return queryInterface.dropTable('Properties');
   }
 };

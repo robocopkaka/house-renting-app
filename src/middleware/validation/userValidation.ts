@@ -13,4 +13,3 @@ export const updateUserValidation = (req, res, next) => {
   return validationHandler(req.body, updateUserSchema, res, next);
 };
 
-
