@@ -20,7 +20,7 @@ describe('tests users', () => {
         await UserModel.destroy({ where: {}, force: true });
     });
 
-    describe.only('/signup', () => {
+    describe('/signup', () => {
         it('landlord should successfully signup', async() => {
            const res = await chai.request(app)
             .post('/users/signup')
@@ -49,7 +49,7 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.message).to.be.eq('"name" is not allowed to be empty');
+                expect(res.body.messages).to.include('"name" is not allowed to be empty');
                 done();
             });
         });
@@ -78,7 +78,7 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.message).to.be.eq('"email" must be a valid email');
+                expect(res.body.messages).to.include('"email" must be a valid email');
                 done();
             });
         });
@@ -92,7 +92,7 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.message).to.be.eq('"phoneNumber" is required');
+                expect(res.body.messages).to.include('"phoneNumber" is required');
                 done();
             });
         });
@@ -107,7 +107,7 @@ describe('tests users', () => {
             })
             .end((error, res) => {
                 expect(res).to.have.status(400);
-                expect(res.body.message).to.be.eq('"password" is not allowed to be empty');
+                expect(res.body.messages).to.include('"password" is not allowed to be empty');
                 done();
             });
         });

@@ -1,13 +1,13 @@
 import express from 'express';
 import PropertyController from '../controllers/propertyController';
-import {addPropertyValidation, updatePropertyValidation } from '../middleware/validation/propertyValidation';
-import { authenticateLandlord } from '../middleware/authenticateLandlord';
+import { addPropertyValidation, updatePropertyValidation } from '../middleware/validation/propertyValidation';
+import { authenticateUser } from '../middleware/authenticateUser';
 
 const router = express.Router();
 
 router.post(
   '/',
-  authenticateLandlord,
+  authenticateUser,
   addPropertyValidation,
   PropertyController.create
 );
@@ -19,7 +19,7 @@ router.get(
 
 router.patch(
   '/:id',
-  authenticateLandlord,
+  authenticateUser,
   updatePropertyValidation,
   PropertyController.update
 );
@@ -31,7 +31,7 @@ router.get(
 
 router.delete(
   '/:id',
-  authenticateLandlord,
+  authenticateUser,
   PropertyController.delete
 );
 

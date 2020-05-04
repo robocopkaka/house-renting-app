@@ -6,17 +6,27 @@ const hash = bcrypt.hashSync('password', salt);
 
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.bulkInsert('Landlords', [{
-      name: 'New property',
+    return queryInterface.bulkInsert('Users', [{
+      name: 'Landlord 1',
       email: 'landlord-1@gmail.com',
       password: hash,
+      phoneNumber: '012345678',
+      role: 'landlord',
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    }, {
+      name: 'Landlord 2',
+      email: 'landlord-2@gmail.com',
+      password: hash,
+      role: 'landlord',
       phoneNumber: '012345678',
       createdAt: new Date(),
       updatedAt: new Date(),
     }, {
-      name: 'New property',
-      email: 'landlord-2@gmail.com',
+      name: 'Tenant 1',
+      email: 'tenant-1@gmail.com',
       password: hash,
+      role: 'tenant',
       phoneNumber: '012345678',
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -24,6 +34,6 @@ module.exports = {
   },
 
   down: (queryInterface, Sequelize) => {
-    return queryInterface.bulkDelete('Landlords', null, {});
+    return queryInterface.bulkDelete('Users', null, {});
   }
 };

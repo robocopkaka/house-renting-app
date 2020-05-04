@@ -9,9 +9,10 @@ chai.use(chaiHttp);
 describe('properties tests', () => {
   let token;
   let token2;
+  let tenantToken;
   before(async () => {
     await chai.request(app)
-      .post('/landlord/login')
+      .post('/users/login')
       .send({
         email: 'landlord-1@gmail.com',
         password: 'password'
@@ -21,13 +22,23 @@ describe('properties tests', () => {
       });
 
     await chai.request(app)
-      .post('/landlord/login')
+      .post('/users/login')
       .send({
         email: 'landlord-2@gmail.com',
         password: 'password'
       })
       .then((res) => {
         token2 = res.body.token;
+      });
+
+    await chai.request(app)
+      .post('/users/login')
+      .send({
+        email: 'tenant-1@gmail.com',
+        password: 'password'
+      })
+      .then((res) => {
+        tenantToken = res.body.token;
       });
   });
   after(async () => {
@@ -217,7 +228,27 @@ describe('properties tests', () => {
         .set('token', token2)
         .end((err, res) => {
           res.should.have.status(403);
-          res.body.message.should.eq('You don\'t own this property');
+          res.body.message.should.eq('You are not authorized to delete this property');
+          done();
+        })
+    });
+  });
+
+  describe('unauthorized user', () => {
+    it('returns an error when a tenant tries to add a property', (done) => {
+      chai.request(app)
+        .post('/properties')
+        .set('token', tenantToken)
+        .send({
+          name: 'New property',
+          description: 'Random description',
+          address: 'Random address',
+          propertyType: 'commercial',
+          category: 'rent',
+        })
+        .end((err, res) => {
+          res.should.have.status(401);
+          res.body.message.should.eq('Unauthorized user')
           done();
         })
     });
