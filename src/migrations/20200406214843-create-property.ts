@@ -26,7 +26,8 @@ module.exports = {
         type: DataTypes.ARRAY(DataTypes.STRING)
       },
       available: {
-        type: DataTypes.BOOLEAN
+        type: DataTypes.BOOLEAN,
+        defaultValue: true
       },
       category: {
         type: DataTypes.STRING

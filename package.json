@@ -42,7 +42,7 @@
     "start:dev": "nodemon dist/app.js",
     "start": "node dist/app.js",
     "db:rollback": "sequelize db:migrate:undo:all",
-    "migrations": "yarn db:rollback && sequelize db:migrate",
+    "migrations": "yarn db:rollback && sequelize db:migrate && sequelize db:seed:all",
     "pretest": "NODE_ENV=test yarn run migrations",
     "test": "NODE_ENV=test nyc --reporter=html --reporter=text mocha ./dist/tests/*.js --timeout 10000 --exit",
     "coverage": "nyc report --reporter=text-lcov | coveralls"

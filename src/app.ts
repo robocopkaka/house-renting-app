@@ -6,6 +6,7 @@ import dotenv from 'dotenv';
 
 import indexRouter from './routes/index';
 import users from './routes/usersRouter';
+import propertyRouter from './routes/propertiesRouter';
 import { createServer } from 'http';
 import sequelize from './index';
 
@@ -33,6 +34,7 @@ app.use(
 // routes
 app.use('/', indexRouter);
 app.use('/users', users);
+app.use('/properties', propertyRouter);
 
 app.get('/', (req: any, res: any) => {
   res.status(200).send('app works');
