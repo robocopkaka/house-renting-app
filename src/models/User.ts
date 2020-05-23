@@ -58,7 +58,7 @@ export default class Users extends Model<Users> {
     const user = this;
     const access = 'auth';
     return jwt.sign(
-      { id: user.id, access },
+      { id: user.id, role: user.role, access },
       process.env.SECRET_KEY,
       // secret key to expire in three days
       { expiresIn: 259200 }
