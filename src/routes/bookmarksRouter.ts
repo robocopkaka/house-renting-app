@@ -29,8 +29,4 @@ router.delete(
     BookmarkController.delete
 );
 
-<<<<<<< HEAD
 export default router;
-=======
-export default router;
->>>>>>> 81007df... Allow tenant to add, fetch and delete bookmarks

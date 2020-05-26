@@ -23,17 +23,9 @@ import { Table, Column, Model, ForeignKey, BelongsTo } from "sequelize-typescrip
         if (values.property) {
             values.property = values.property.toJson()
         }
-<<<<<<< HEAD
-
-=======
         
->>>>>>> 81007df... Allow tenant to add, fetch and delete bookmarks
         return values;
       }
 
   }
-<<<<<<< HEAD
-   
-=======
-  
->>>>>>> 81007df... Allow tenant to add, fetch and delete bookmarks
+

@@ -75,8 +75,4 @@ export default class BookmarkController {
         }
     }
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 81007df... Allow tenant to add, fetch and delete bookmarks
