@@ -6,4 +6,3 @@ export const authenticateTenant =  (req, res, next) => {
     req.headers['tenantId'] = req.headers.decoded.id;
     next();
   };
-  

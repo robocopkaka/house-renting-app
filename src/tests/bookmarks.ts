@@ -82,7 +82,7 @@ describe('bookmarks tests', () => {
                   propertyId: 300
               })
               .end((err, res) => {
-                res.should.have.status(400);
+                res.should.have.status(404);
                 res.body.message.should.eq('Property with Id not found')
                 done()
               })

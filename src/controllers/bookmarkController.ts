@@ -10,7 +10,7 @@ export default class BookmarkController {
         try {
             const propertyFound = await Property.findByPk(propertyId)
             if (!propertyFound) {
-                return res.status(400).json({message: 'Property with Id not found'});
+                return res.status(404).json({message: 'Property with Id not found'});
             }
         
             const bookmarkExists = await Bookmark.findOne({
@@ -31,7 +31,6 @@ export default class BookmarkController {
             return res.status(201).json(data);
 
         } catch (error) {
-            console.log('ERROR', error);
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
