@@ -58,14 +58,14 @@ export default class BookmarkController {
         try {
             const userId = parseInt(req.headers.tenantId, 10);
             const { propertyId } = req.body;
-            const removed = await Bookmark.destroy({
+            const removedBookmark = await Bookmark.destroy({
                 where: {
                     userId,
                     propertyId
                 }
             });
-            if (!removed) {
-                return res.status(500).json({message: 'Bookmark not removed'});
+            if (!removedBookmark) {
+                return res.status(404).json({message: 'Bookmark not found'});
             }
             return res.status(200).json({message: 'Bookmark removed'});
         } catch (error) {
