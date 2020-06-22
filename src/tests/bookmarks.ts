@@ -11,6 +11,7 @@ describe('bookmarks tests', () => {
     let token;
     let landlordToken;
     let tenantId;
+    let tenant2Token;
 
     before(async() => {
         await chai.request(app)
@@ -31,6 +32,16 @@ describe('bookmarks tests', () => {
         })
         .then((res) => {
          landlordToken = res.body.token;
+        });
+
+        await chai.request(app)
+        .post('/users/login')
+        .send({
+          email: 'tenant-2@gmail.com',
+          password: 'password'
+        })
+        .then((res) => {
+          tenant2Token = res.body.token;
         });
 
         const tenant = await User.findOne({ attributes : ['id'], where: { email: 'tenant-1@gmail.com' } });
@@ -61,6 +72,21 @@ describe('bookmarks tests', () => {
           done();
         });
         });
+
+        it('returns a 409 when adding already added bookmarks', (done) => {
+          chai.request(app)
+          .post('/bookmarks')
+          .set('token', token)
+          .send({
+            propertyId: 1
+          })
+          .end((err, res) => {
+            res.should.have.status(409);
+            res.body.message.should.eq('Bookmark already exists')
+            done();
+          });
+          });
+  
 
         it('returns errors if required parameters are missing', (done) => {
             chai.request(app)
@@ -115,6 +141,18 @@ describe('bookmarks tests', () => {
                   done();
                 });
             });
+            
+            it('returns 404 if no bookmarks are found for user', (done) => {
+              chai.request(app)
+                .get('/bookmarks')
+                .set('token', tenant2Token)
+                .end((err, res) => {
+                  res.should.have.status(404);
+                  res.body.message.should.eq('No bookmarks found for user');
+                  done();
+                });
+            });
+
           });
 
     });
@@ -132,23 +170,37 @@ describe('bookmarks tests', () => {
               done();
             });
         });
-      });
 
-      describe('unauthorized user', () => {
-        it('returns an error when a landlord tries to add a bookmark', (done) => {
+        it('returns 404 if deleting a non-existent bookmark', (done) => {
           chai.request(app)
-            .post('/bookmarks')
-            .set('token', landlordToken)
+            .delete('/bookmarks')
+            .set('token', token)
             .send({
                 propertyId: 1
               })
             .end((err, res) => {
-              res.should.have.status(401);
-              res.body.message.should.eq('Unauthorized user')
+              res.should.have.status(404);
               done();
-            })
+            });
+
         });
       });
+
+    describe('unauthorized user', () => {
+      it('returns an error when a landlord tries to add a bookmark', (done) => {
+        chai.request(app)
+          .post('/bookmarks')
+          .set('token', landlordToken)
+          .send({
+              propertyId: 1
+            })
+          .end((err, res) => {
+            res.should.have.status(401);
+            res.body.message.should.eq('Unauthorized user')
+            done();
+          })
+      });
+    });
 
 
 });

@@ -46,7 +46,7 @@ export default class BookmarkController {
                 }
             });
 
-            if (!allBookmarks) {
+            if (allBookmarks.length === 0) {
                 return res.status(404).json({message: 'No bookmarks found for user'});
             }
             const bookmarks = allBookmarks.map((bookmark) => {
@@ -73,7 +73,6 @@ export default class BookmarkController {
             }
             return res.status(200).json({message: 'Bookmark removed'});
         } catch (error) {
-            console.log('ERROR', error);
             return res.status(500).json({ message: 'Internal server error' });
         }
     }
