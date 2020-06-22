@@ -45,6 +45,10 @@ export default class BookmarkController {
                     userId
                 }
             });
+
+            if (!allBookmarks) {
+                return res.status(404).json({message: 'No bookmarks found for user'});
+            }
             const bookmarks = allBookmarks.map((bookmark) => {
                 return bookmark.toJSON()
             });
