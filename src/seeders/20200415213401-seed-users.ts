@@ -30,6 +30,14 @@ module.exports = {
       phoneNumber: '012345678',
       createdAt: new Date(),
       updatedAt: new Date(),
+    }, {
+      name: 'Tenant 2',
+      email: 'tenant-2@gmail.com',
+      password: hash,
+      role: 'tenant',
+      phoneNumber: '012345678',
+      createdAt: new Date(),
+      updatedAt: new Date(),
     }], {});
   },
 
