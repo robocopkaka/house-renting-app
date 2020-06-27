@@ -109,7 +109,22 @@ export default class PropertyController {
 
   public static async fetchAll (req, res) {
     try {
-      const properties = await Property.findAll();
+      const { category } = req.query;
+      let whereQuery = {}
+      if (category) {
+         whereQuery = { where: {
+          category
+        }}
+      }
+
+      const properties = await Property.findAll(whereQuery);
+
+      if (properties.length === 0) {
+        return res.status(404).json({
+          message: 'No Property Found',
+        });
+
+      }
 
       return res.status(200).json({
         message: 'Properties returned successfully',
