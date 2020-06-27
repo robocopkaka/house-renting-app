@@ -189,7 +189,7 @@ describe('properties tests', () => {
   });
 
   describe('fetch properties', () => {
-    it('returns exisitng properties', (done) => {
+    it('returns existing properties', (done) => {
       chai.request(app)
         .get('/properties')
         .end((err, res) => {
@@ -198,6 +198,39 @@ describe('properties tests', () => {
           done();
         });
     });
+
+    it('returns existing properties by category', (done) => {
+      chai.request(app)
+        .post('/properties')
+        .set('token', token)
+        .send({
+          name: 'New property',
+          description: 'Random description',
+          address: 'Random address',
+          propertyType: 'commercial',
+          category: 'lease',
+      }).end((err, res) => {
+        chai.request(app)
+        .get('/properties?category=lease')
+        .end((err, res) => {
+          res.should.have.status(200);
+          res.body.properties.length.should.eq(1);
+          done();
+        });
+      })
+      
+    });
+
+    it('returns 404 when property isn\'t found', (done) => {
+      chai.request(app)
+        .get('/properties?category=random')
+        .end((err, res) => {
+          res.should.have.status(404);
+          res.body.message.should.eq('No Property Found');
+          done();
+        });
+    });
+
   });
 
   describe('delete properties', () => {
