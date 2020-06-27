@@ -5,7 +5,6 @@ const description = Joi.string().trim().min(3).required();
 const propertyType = Joi.string().trim().min(3).max(20);
 const address = Joi.string().trim().min(3).max(200).required();
 const features = Joi.array();
-// const category = Joi.string().trim().min(3).max(30).required();
 const category = Joi.string().valid('rent', 'lease', 'sale', 'short-let').required();
 const available = Joi.boolean();
 
