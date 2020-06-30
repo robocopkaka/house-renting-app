@@ -215,6 +215,10 @@ describe('properties tests', () => {
         .end((err, res) => {
           res.should.have.status(200);
           res.body.properties.length.should.eq(1);
+          res.body.properties[0].name.should.eq('New property');
+          res.body.properties[0].description.should.eq('Random description');
+          res.body.properties[0].propertyType.should.eq('commercial');
+          res.body.properties[0].category.should.eq('lease');
           done();
         });
       })
